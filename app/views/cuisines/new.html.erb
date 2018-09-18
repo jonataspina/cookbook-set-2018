@@ -1,0 +1,10 @@
+<h1>Cadastrar Cozinha</h1>
+
+<%= form_for @cuisine do |f| %>
+  <div>
+    <%= f.label :name, 'Nome' %>
+    <%= f.text_field :name %>
+  </div>
+
+  <%= f.submit 'Cadastrar' %>
+<% end %>
