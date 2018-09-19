@@ -13,7 +13,10 @@ class CuisinesController < ApplicationController
     @cuisine = Cuisine.new(cuisine_params)
 
     if @cuisine.save 
+      flash[:success] = 'Cozinha cadastrada com sucesso'
       redirect_to @cuisine
+    else
+      render :new
     end
   end 
 

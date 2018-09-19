@@ -1,3 +1,9 @@
+<% @cuisine.errors.full_messages.each do |m| %>
+  <div class='alert alert-warning'>
+    <%= m %>
+  </div>
+<% end %>
+
 <h1>Cadastrar Cozinha</h1>
 
 <%= form_for @cuisine do |f| %>
