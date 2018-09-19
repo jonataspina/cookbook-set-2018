@@ -4,12 +4,27 @@ feature 'User update recipe' do
   scenario 'view edit button' do
     recipe_type = RecipeType.create(name: 'Sobremesa')
     cuisine = Cuisine.create(name: 'Brasileira')
+
+    user = User.create(email: 'teste@teste.com.br', password: '12345678')
+
     Recipe.create(title: 'Bolo de cenoura', difficulty: 'Médio',
                   recipe_type: recipe_type, cuisine: cuisine,
                   cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
+                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                  user: user)
 
     visit root_path
+    
+    click_on 'Entrar'
+
+    within 'form' do
+      fill_in 'Email', with: 'teste@teste.com.br'
+      fill_in 'Senha', with: '12345678'
+      click_on 'Entrar'
+    end
+
+    expect(current_path).to eq root_path
+
     click_on 'Bolo de cenoura'
 
     expect(page).to have_css('a.btn.btn-primary', text: 'Editar')
@@ -20,13 +35,28 @@ feature 'User update recipe' do
     RecipeType.create(name: 'Entrada')
     cuisine = Cuisine.create(name: 'Brasileira')
     Cuisine.create(name: 'Arabe')
+
+    user = User.create(email: 'teste@teste.com.br', password: '12345678')
+
     Recipe.create(title: 'Bolodecenoura', difficulty: 'Médio',
                   recipe_type: recipe_type, cuisine: cuisine,
                   cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
+                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                  user: user)
 
     # simula a ação do usuário
     visit root_path
+
+    click_on 'Entrar'
+
+    within 'form' do
+      fill_in 'Email', with: 'teste@teste.com.br'
+      fill_in 'Senha', with: '12345678'
+      click_on 'Entrar'
+    end
+
+    expect(current_path).to eq root_path
+
     click_on 'Bolodecenoura'
     click_on 'Editar'
 
@@ -48,18 +78,32 @@ feature 'User update recipe' do
     expect(page).to have_css('p', text: '45 minutos')
     expect(page).to have_css('p', text:  'Cenoura, farinha, ovo, oleo de soja e chocolate')
     expect(page).to have_css('p', text: 'Faça um bolo e uma cobertura de chocolate')
+    expect(page).to have_css('p', text: 'teste@teste.com.br')
   end
 
   scenario 'and must fill in all fields' do
     recipe_type = RecipeType.create(name: 'Sobremesa')
     cuisine = Cuisine.create(name: 'Brasileira')
+    user = User.create(email: 'teste@teste.com.br', password: '12345678')
     Recipe.create(title: 'Bolodecenoura', difficulty: 'Médio',
                   recipe_type: recipe_type, cuisine: cuisine,
                   cook_time: 50, ingredients: 'Farinha, açucar, cenoura',
-                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
+                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes',
+                  user: user)
 
     # simula a ação do usuário
     visit root_path
+
+    click_on 'Entrar'
+
+    within 'form' do
+      fill_in 'Email', with: 'teste@teste.com.br'
+      fill_in 'Senha', with: '12345678'
+      click_on 'Entrar'
+    end
+
+    expect(current_path).to eq root_path
+
     click_on 'Bolodecenoura'
     click_on 'Editar'
 
@@ -69,7 +113,6 @@ feature 'User update recipe' do
     fill_in 'Ingredientes', with: ''
     fill_in 'Como Preparar', with: ''
     click_on 'Enviar'
-
 
     expect(page).to have_content('Você deve informar todos os dados da receita')
   end

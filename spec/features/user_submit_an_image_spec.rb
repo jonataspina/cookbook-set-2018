@@ -6,7 +6,20 @@ feature 'User attach photo to recipe' do
     RecipeType.create(name: 'Entrada')
     Cuisine.create(name: 'Arabe')
 
+    User.create(email: 'teste@teste.com.br', password: '12345678')
+
     visit root_path
+
+    click_on 'Entrar'
+
+    within 'form' do
+      fill_in 'Email', with: 'teste@teste.com.br'
+      fill_in 'Senha', with: '12345678'
+      
+      click_on 'Entrar' 
+    end 
+
+    expect(current_path).to eq root_path
 
     click_on 'Enviar uma receita'
 
@@ -29,8 +42,20 @@ feature 'User attach photo to recipe' do
 
     Cuisine.create(name: 'Arabe')
     RecipeType.create(name: 'Entrada')
+    User.create(email: 'teste@teste.com.br', password: '12345678')
 
     visit root_path
+    
+    click_on 'Entrar'
+
+    within 'form' do
+      fill_in 'Email', with: 'teste@teste.com.br'
+      fill_in 'Senha', with: '12345678'
+      
+      click_on 'Entrar' 
+    end 
+
+    expect(current_path).to eq root_path
     click_on 'Enviar uma receita'
 
     fill_in 'Título', with: 'Tabule'
@@ -50,8 +75,21 @@ feature 'User attach photo to recipe' do
   scenario 'and is not an image' do
     Cuisine.create(name: 'Arabe')
     RecipeType.create(name: 'Entrada')
+    User.create(email: 'teste@teste.com.br', password: '12345678')
 
     visit root_path
+    
+    click_on 'Entrar'
+
+    within 'form' do
+      fill_in 'Email', with: 'teste@teste.com.br'
+      fill_in 'Senha', with: '12345678'
+      
+      click_on 'Entrar' 
+    end 
+
+    expect(current_path).to eq root_path
+
     click_on 'Enviar uma receita'
 
     fill_in 'Título', with: 'Tabule'

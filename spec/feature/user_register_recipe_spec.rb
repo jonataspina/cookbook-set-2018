@@ -14,9 +14,23 @@ feature 'User register recipe' do
     RecipeType.create(name: 'Sobremesa')
     RecipeType.create(name: 'Entrada')
     Cuisine.create(name: 'Arabe')
+    
+    User.create(email: 'teste@teste.com.br', password: '12345678')
 
     # simula a ação do usuário
     visit root_path
+
+    click_on 'Entrar'
+
+    within 'form' do
+      fill_in 'Email', with: 'teste@teste.com.br'
+      fill_in 'Senha', with: '12345678'
+      
+      click_on 'Entrar' 
+    end 
+
+    expect(current_path).to eq root_path
+    
     click_on 'Enviar uma receita'
 
     fill_in 'Título', with: 'Tabule'
@@ -27,7 +41,6 @@ feature 'User register recipe' do
     fill_in 'Ingredientes', with: 'Trigo para quibe, cebola, tomate picado, azeite, salsinha'
     fill_in 'Como Preparar', with: 'Misturar tudo e servir. Adicione limão a gosto.'
     click_on 'Enviar'
-
 
     # expectativas
     expect(page).to have_css('h1', text: 'Tabule')
@@ -40,6 +53,8 @@ feature 'User register recipe' do
     expect(page).to have_css('p', text: 'Trigo para quibe, cebola, tomate picado, azeite, salsinha')
     expect(page).to have_css('h3', text: 'Como Preparar')
     expect(page).to have_css('p', text:  'Misturar tudo e servir. Adicione limão a gosto.')
+    expect(page).to have_css('h3', text: 'Autor')
+    expect(page).to have_css('p', text:  'teste@teste.com.br')
   end
 
   scenario 'and must fill in all fields' do
