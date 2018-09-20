@@ -44,6 +44,17 @@ class RecipesController < ApplicationController
     end
   end
 
+  def destroy
+    @recipe = Recipe.find(params[:id])
+    if @recipe.user == current_user
+      @recipe.destroy
+      flash[:success] = 'Receita removida com sucesso' 
+      redirect_to root_path
+    end
+
+
+  end
+
   def featured
     @recipe.update(featured: true)
     flash[:success] = 'Receita marcada como destaque com sucesso!'
