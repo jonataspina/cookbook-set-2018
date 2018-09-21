@@ -10,13 +10,23 @@
 <p><%= @recipe.cook_time_min %></p>
 <h3>Ingredientes</h3>
 <p><%= @recipe.ingredients %></p>
+
+<h3>Ingredientes Base</h3>
+<ul>
+<% @recipe.base_ingredients.each do |bi| %>
+  <li><%= bi.name %></li>
+<% end %>
+</ul>
+
 <h3>Como Preparar</h3>
 <p><%= @recipe.cook_method %></p>
 <h3>Autor</h3>
 <p><%= @recipe.user.email %></p>
 
-<%= link_to 'Editar', edit_recipe_path(@recipe), class: 'btn btn-primary' %>
-<%= link_to 'Remover', recipe_path(@recipe), method: :delete, class: 'btn btn-danger' %>
+<% if current_user == @recipe.user %>
+  <%= link_to 'Editar', edit_recipe_path(@recipe), class: 'btn btn-primary' %>
+  <%= link_to 'Remover', recipe_path(@recipe), method: :delete, class: 'btn btn-danger' %>
+<% end %>
 <%= link_to 'Marcar como destaque', feature_recipe_path(@recipe),
     class: 'btn btn-success', method: :post %>
 <%= link_to 'Voltar', root_path, class: 'btn btn-secondary' %>

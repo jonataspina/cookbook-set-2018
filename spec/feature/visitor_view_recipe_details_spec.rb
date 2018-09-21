@@ -32,6 +32,7 @@ feature 'Visitor view recipe details' do
     expect(page).to have_css('p', text: recipe.cook_method)
     expect(page).to have_css('h3', text: 'Autor')
     expect(page).to have_css('p', text: recipe.user.email)
+    expect(page).not_to have_link('Remover')
   end
 
   scenario 'and view return button' do
